@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'uuid';
+import List from './components/List';
 
 class Home extends React.Component{
 
@@ -55,7 +56,10 @@ class Home extends React.Component{
       event.preventDefault();
   }
 
-  addTask = (boardId) => {
+  addTask = (boardId, taskText) => {
+
+    console.log('here', boardId + taskText);
+    
     this.setState( prevState => {
       console.log(prevState);
       const {cards} = prevState;
@@ -63,7 +67,7 @@ class Home extends React.Component{
       
       cards.push({
         id: uuid(),
-        text: prevState.task,
+        text: taskText,
         board_id: boardId
       })
       return {
@@ -84,21 +88,15 @@ class Home extends React.Component{
               
               boards.map( board => {
                 return (
-                  <div className="list" onDrop={(e) => this.onDrop(e, board)} key={board.id} onDragOver={this.onDragOver}>
-                    <h5>{board.text}</h5>
-                    <input type="text" placeholder="Add task..." value={task} onChange={(e) => this.setState({task: e.target.value})}/>
-                    <button onClick={() => this.addTask(board.id)}>+</button>
-                  {cards.length && cards.map( i => {
-                      if(i.board_id === board.id) {
-                        return (
-                          // <div className="list-item" draggable onDragStart={this.onDragStart}>{i.text}</div>
-                          <div className="list-item" draggable onDragStart={(e) => this.onDragStart(e, i)} key={i.id}>{i.text}</div>
-                        )
-                      }
-                      return null;
-                    })
-                  }       
-              </div>              
+
+                  <List
+                    onDragOver={this.onDragOver}
+                    list={board}
+                    onAddTask={this.addTask} 
+                    cards={cards}
+                    onDragStart={this.onDragStart}
+                    onDragOver={this.onDragOver}
+                    onDrop={this.onDrop}/>            
                 )
               })
 
