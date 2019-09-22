@@ -5,13 +5,13 @@ import List from './components/List';
 class Home extends React.Component{
 
   state = {
-    boards: [],
+    lists: [],
     cards: [],
     task: ''
   }
 
   componentDidMount() {
-    const defaultBoards = [
+    const defaultLists = [
       {
         id: uuid(),
         text: 'Todo'
@@ -26,7 +26,7 @@ class Home extends React.Component{
       }
     ];
 
-    this.setState({boards: defaultBoards});
+    this.setState({lists: defaultLists});
   }
 
   onDragStart = (event, card) => {
@@ -34,13 +34,13 @@ class Home extends React.Component{
     event.dataTransfer.setData("cardId", card.id);
   }
 
-  onDrop = (e, targetBoard) => {
+  onDrop = (e, targetList) => {
     
     const cardId = e.dataTransfer.getData("cardId");
     
     const cards = this.state.cards.map( i => {
       if(i.id === cardId){
-        i.board_id = targetBoard.id;
+        i.list_id = targetList.id;
       }
       return i;
     });
@@ -56,19 +56,15 @@ class Home extends React.Component{
       event.preventDefault();
   }
 
-  addTask = (boardId, taskText) => {
-
-    console.log('here', boardId + taskText);
+  addTask = (listId, taskText) => {
     
     this.setState( prevState => {
-      console.log(prevState);
       const {cards} = prevState;
-      console.log({cards});
       
       cards.push({
         id: uuid(),
         text: taskText,
-        board_id: boardId
+        list_id: listId
       })
       return {
         cards,
@@ -79,21 +75,21 @@ class Home extends React.Component{
 
   render() {
 
-    const {boards, cards, task} = this.state;
+    const {lists, cards} = this.state;
 
       return (
           <div className="App">
 
-              {boards.length && 
+              {lists.length && 
               
-              boards.map( board => {
+              lists.map( list => {
                 return (
 
                   <List
-                    onDragOver={this.onDragOver}
-                    list={board}
+                    key={list.id}
+                    list={list}
                     onAddTask={this.addTask} 
-                    cards={cards.filter(i => i.board_id === board.id)}
+                    cards={cards.filter(i => i.list_id === list.id)}
                     onDragStart={this.onDragStart}
                     onDragOver={this.onDragOver}
                     onDrop={this.onDrop}/>            
