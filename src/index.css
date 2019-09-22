@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-top: 20px;
 }
 
 .list {
@@ -19,4 +20,7 @@
 }
 .item-card {
   margin: 15px 0;
+}
+.card-custom {
+  align-self: flex-start;
 }

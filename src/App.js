@@ -48,7 +48,7 @@ class Home extends React.Component{
       cards
     });
 
-    e.dataTransfer.clearData();
+    // e.dataTransfer.clearData();
     e.preventDefault();
   }
 
@@ -93,7 +93,7 @@ class Home extends React.Component{
                     onDragOver={this.onDragOver}
                     list={board}
                     onAddTask={this.addTask} 
-                    cards={cards}
+                    cards={cards.filter(i => i.board_id === board.id)}
                     onDragStart={this.onDragStart}
                     onDragOver={this.onDragOver}
                     onDrop={this.onDrop}/>            
