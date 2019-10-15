@@ -10,13 +10,32 @@ export default (props) => {
         setTask('');
     }
     return (
-        <div className="card border-info card-custom" onDrop={(e) => props.onDrop(e, props.list)} onDragOver={props.onDragOver}>
+        <div className="card border-info card-custom" 
+            onDragEnter={e => {
+                const target = e.target;
+                
+                if(target.classList.contains('card-custom')){
+                console.log(target.classList);
+                    target.style.borderStyle = 'dashed';
+                }
+            }}
+            onDragLeave={e => {
+                const target = e.target;
+                if(target.classList.contains('card-custom')){
+                    target.style.borderStyle = 'solid';
+                }
+            }}
+            onDrop={(e) => props.onDrop(e, props.list)} 
+            onDragOver={props.onDragOver}>
             <div className="card-header">
                 {props.list.text}
             </div>
             <div className="card-body">
-                <form class="form-inline">
-                    <div class="form-group mx-sm-3 mb-2">
+                <form className="form-inline" onSubmit={(e) => {
+                        e.preventDefault();
+                        onAddTaskButtonClick();
+                    }}>
+                    <div className="form-group mx-sm-3 mb-2">
                         <input type="text" className="form-control" placeholder="Add task..." 
                             value={taskText} onChange={(e) => setTask(e.target.value)}/>
                     </div>

@@ -78,6 +78,11 @@ class Home extends React.Component{
     const {lists, cards} = this.state;
 
       return (
+        <>
+          <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 className="display-4">React Kanban</h1>
+          </div>
+
           <div className="App">
 
               {lists.length && 
@@ -98,6 +103,7 @@ class Home extends React.Component{
 
               }
           </div>
+        </>
       );
   }
 

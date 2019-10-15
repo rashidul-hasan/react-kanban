@@ -20,6 +20,10 @@
 }
 .item-card {
   margin: 15px 0;
+  cursor: pointer;
+}
+.item-card:hover {
+  border-style: dashed;
 }
 .card-custom {
   align-self: flex-start;
